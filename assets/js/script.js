@@ -1,15 +1,53 @@
 // TODO: Declare any global variables we need
-
+let heads = 0
+let tails = 0
 
 document.addEventListener('DOMContentLoaded', function () {
-    // This is just a sanity check to make sure your JavaScript script is getting loaded
-    // You can remove it once you see it in your browser console in the developer tools
-    console.log('Hi')
-
-    // TODO: Add event listener and handler for flip and clear buttons
-
+    //updates the scoreboard
+    function updateStats(){
+        let flips = heads + tails
+        document.getElementById("heads").textContent = heads
+        document.getElementById("tails").textContent = tails
+        if(flips > 0){
+            document.getElementById("heads-percent").textContent = Math.round((heads/flips) * 100) + "%"
+            document.getElementById("tails-percent").textContent = Math.round((tails/flips) * 100) + "%"
+        }else{
+            document.getElementById("heads-percent").textContent = "0%"
+            document.getElementById("tails-percent").textContent = "0%"
+        }
+    }
+    document.getElementById("flip").addEventListener("click", function() {
+            //Penny is heads up if isHeads is greater than 0.5
+            let isHeads = Math.random() > 0.5
+            //keep track of the results of each flip
+            if(isHeads){
+                heads++
+                document.getElementById("pennyFace").setAttribute("src", "assets/images/penny-heads.jpg")
+                document.getElementById("pennyFace").setAttribute("alt", "Penny Heads Up")
+                document.getElementsByClassName("message-container")[0].textContent = "Heads"
+            }else{
+                tails++
+                document.getElementById("pennyFace").setAttribute("src", "assets/images/penny-tails.jpg")
+                document.getElementById("pennyFace").setAttribute("alt", "Penny Tails Up")
+                document.getElementsByClassName("message-container")[0].textContent = "Tails"
+            }
+            //update the scoreboard
+            updateStats()
+        })
+    document.getElementById("clear").addEventListener("click", function(){
+        //resets heads and tails values to zero
+        heads = 0
+        tails = 0
+        //resets the penny
+        document.getElementById("pennyFace").setAttribute("src", "assets/images/penny-heads.jpg")
+        document.getElementById("pennyFace").setAttribute("alt", "Penny Heads Up")
+        document.getElementsByClassName("message-container")[0].textContent = "Let's get rolling!"
+        //update the scoreboard
+        updateStats()
+    })
     // Flip Button Click Handler
         // TODO: Determine flip outcome
+
         // TODO: Update image and status message in the DOM
 
         // Update the scorboard
